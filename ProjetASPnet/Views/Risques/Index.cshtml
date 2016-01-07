@@ -1,0 +1,48 @@
+﻿@model  ProjetASPnet.Models.RisqueViewModel
+
+@{
+    ViewBag.Title = "Liste des risques pour ce travailleur";
+}
+
+<h2>Liste des risques pour ce travailleur</h2>
+
+<form action="/Risques/SelectedRisques" method="post">
+    @if(Model.ListRisquesSelected != null && Model.ListRisquesSelected.Count > 0) { 
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListRisquesSelected[0].libelle)
+
+                </th>
+            </tr>
+
+
+            @for (int i = 0; i < Model.ListRisquesSelected.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.HiddenFor(modelItem => Model.ListRisquesSelected[i].code)
+                        @Html.CheckBoxFor(modelItem => Model.ListRisquesSelected[i].isSelected)
+                        @Html.DisplayFor(modelItem => Model.ListRisquesSelected[i].libelle)
+                        @Html.HiddenFor(modelItem => Model.ListRisquesSelected[i].libelle)
+
+
+                    </td>
+                </tr>
+            }
+        </table>
+        <button type="submit">Ajouter</button>
+    }
+    else
+    {
+         if (Model.ListRisquesSelected != null) {
+             <br/>
+             <h4>La limite de risques pour cet employé a été atteinte</h4>
+        }
+        else
+        {
+            <br />
+            <h4>La liste des Risques n'a pas pu être récupéré</h4>
+         }
+    }
+</form>

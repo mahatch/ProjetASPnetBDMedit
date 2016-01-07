@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ProjetASPnet.Models.Entreprise>
+
+@{
+    ViewBag.Title = "Liste des entreprises";
+}
+<h1 style="text-align: center">Bienvenu sur le pojet Medit</h1>
+<h2>Choissiez l'entreprise</h2>
+
+<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.denomation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.adresse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.numeroTel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nbTravailleurSoumis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nbTravailleurNonSoumis)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.denomation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.adresse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.numeroTel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nbTravailleurSoumis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nbTravailleurNonSoumis)
+            </td>
+            <td>
+                @Html.ActionLink("Choisir cette entreprise", "ChoixEntreprise", new { id=item.numero }) |
+            </td>
+        </tr>
+
+    }
+
+    </table>

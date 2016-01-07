@@ -1,0 +1,469 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MeditModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ContratTravailSoumis">
+          <Key>
+            <PropertyRef Name="contrat_id" />
+          </Key>
+          <Property Name="contrat_id" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="dateDebut" Type="date" Nullable="false" />
+          <Property Name="numero" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="personne_id" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="dateFin" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Entreprise">
+          <Key>
+            <PropertyRef Name="numero" />
+          </Key>
+          <Property Name="numero" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="denomation" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="adresse" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="numeroTel" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="nbTravailleurSoumis" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="nbTravailleurNonSoumis" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Examen">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="libelle" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="prix" Type="real" />
+        </EntityType>
+        <EntityType Name="ExamNonRelTravail">
+          <Key>
+            <PropertyRef Name="contrat_id" />
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="contrat_id" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="code" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="exposition2">
+          <Key>
+            <PropertyRef Name="contrat_id" />
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="contrat_id" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="code" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profession">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="denomination" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Risque">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="libelle" Type="varchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="suiviExamObl">
+          <Key>
+            <PropertyRef Name="S_E_code" />
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="S_E_code" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="code" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Travailleur">
+          <Key>
+            <PropertyRef Name="personne_id" />
+          </Key>
+          <Property Name="personne_id" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="nom" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="adresse" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="numeroDossier" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="code" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__ContratTr__perso__7849DB76">
+          <End Role="Travailleur" Type="Self.Travailleur" Multiplicity="1" />
+          <End Role="ContratTravailSoumis" Type="Self.ContratTravailSoumis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Travailleur">
+              <PropertyRef Name="personne_id" />
+            </Principal>
+            <Dependent Role="ContratTravailSoumis">
+              <PropertyRef Name="personne_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ExamNonRe__contr__7EF6D905">
+          <End Role="ContratTravailSoumis" Type="Self.ContratTravailSoumis" Multiplicity="1" />
+          <End Role="ExamNonRelTravail" Type="Self.ExamNonRelTravail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContratTravailSoumis">
+              <PropertyRef Name="contrat_id" />
+            </Principal>
+            <Dependent Role="ExamNonRelTravail">
+              <PropertyRef Name="contrat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__expositio__contr__18B6AB08">
+          <End Role="ContratTravailSoumis" Type="Self.ContratTravailSoumis" Multiplicity="1" />
+          <End Role="exposition2" Type="Self.exposition2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContratTravailSoumis">
+              <PropertyRef Name="contrat_id" />
+            </Principal>
+            <Dependent Role="exposition2">
+              <PropertyRef Name="contrat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__exposition__code__19AACF41">
+          <End Role="Risque" Type="Self.Risque" Multiplicity="1" />
+          <End Role="exposition2" Type="Self.exposition2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Risque">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="exposition2">
+              <PropertyRef Name="code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__suiviExam__S_E_c__0880433F">
+          <End Role="Examen" Type="Self.Examen" Multiplicity="1" />
+          <End Role="suiviExamObl" Type="Self.suiviExamObl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Examen">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="suiviExamObl">
+              <PropertyRef Name="S_E_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__suiviExamO__code__078C1F06">
+          <End Role="Risque" Type="Self.Risque" Multiplicity="1" />
+          <End Role="suiviExamObl" Type="Self.suiviExamObl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Risque">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="suiviExamObl">
+              <PropertyRef Name="code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Travailleu__code__74794A92">
+          <End Role="Profession" Type="Self.Profession" Multiplicity="1" />
+          <End Role="Travailleur" Type="Self.Travailleur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profession">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="Travailleur">
+              <PropertyRef Name="code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MeditModelStoreContainer">
+          <EntitySet Name="ContratTravailSoumis" EntityType="Self.ContratTravailSoumis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Entreprise" EntityType="Self.Entreprise" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Examen" EntityType="Self.Examen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExamNonRelTravail" EntityType="Self.ExamNonRelTravail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="exposition2" EntityType="Self.exposition2" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profession" EntityType="Self.Profession" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Risque" EntityType="Self.Risque" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="suiviExamObl" EntityType="Self.suiviExamObl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Travailleur" EntityType="Self.Travailleur" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ContratTr__perso__7849DB76" Association="Self.FK__ContratTr__perso__7849DB76">
+            <End Role="Travailleur" EntitySet="Travailleur" />
+            <End Role="ContratTravailSoumis" EntitySet="ContratTravailSoumis" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ExamNonRe__contr__7EF6D905" Association="Self.FK__ExamNonRe__contr__7EF6D905">
+            <End Role="ContratTravailSoumis" EntitySet="ContratTravailSoumis" />
+            <End Role="ExamNonRelTravail" EntitySet="ExamNonRelTravail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__expositio__contr__18B6AB08" Association="Self.FK__expositio__contr__18B6AB08">
+            <End Role="ContratTravailSoumis" EntitySet="ContratTravailSoumis" />
+            <End Role="exposition2" EntitySet="exposition2" />
+          </AssociationSet>
+          <AssociationSet Name="FK__exposition__code__19AACF41" Association="Self.FK__exposition__code__19AACF41">
+            <End Role="Risque" EntitySet="Risque" />
+            <End Role="exposition2" EntitySet="exposition2" />
+          </AssociationSet>
+          <AssociationSet Name="FK__suiviExam__S_E_c__0880433F" Association="Self.FK__suiviExam__S_E_c__0880433F">
+            <End Role="Examen" EntitySet="Examen" />
+            <End Role="suiviExamObl" EntitySet="suiviExamObl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__suiviExamO__code__078C1F06" Association="Self.FK__suiviExamO__code__078C1F06">
+            <End Role="Risque" EntitySet="Risque" />
+            <End Role="suiviExamObl" EntitySet="suiviExamObl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Travailleu__code__74794A92" Association="Self.FK__Travailleu__code__74794A92">
+            <End Role="Profession" EntitySet="Profession" />
+            <End Role="Travailleur" EntitySet="Travailleur" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MeditModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ContratTravailSoumis">
+          <Key>
+            <PropertyRef Name="contrat_id" />
+          </Key>
+          <Property Name="contrat_id" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="dateDebut" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="numero" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="personne_id" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="dateFin" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Entreprise" Relationship="Self.REF_Contr_Entre_FK" FromRole="ContratTravailSoumis" ToRole="Entreprise" />
+          <NavigationProperty Name="Travailleur" Relationship="Self.REF_Contr_Trava_FK" FromRole="ContratTravailSoumis" ToRole="Travailleur" />
+          <NavigationProperty Name="Examen" Relationship="Self.ExamNonRelTravail" FromRole="ContratTravailSoumis" ToRole="Examen" />
+          <NavigationProperty Name="Risque" Relationship="Self.exposition2" FromRole="ContratTravailSoumis" ToRole="Risque" />
+        </EntityType>
+        <EntityType Name="Entreprise">
+          <Key>
+            <PropertyRef Name="numero" />
+          </Key>
+          <Property Name="numero" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="denomation" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="adresse" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="numeroTel" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nbTravailleurSoumis" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="nbTravailleurNonSoumis" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <NavigationProperty Name="ContratTravailSoumis" Relationship="Self.REF_Contr_Entre_FK" FromRole="Entreprise" ToRole="ContratTravailSoumis" />
+        </EntityType>
+        <EntityType Name="Examen">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="libelle" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prix" Type="Single" />
+          <NavigationProperty Name="ContratTravailSoumis" Relationship="Self.ExamNonRelTravail" FromRole="Examen" ToRole="ContratTravailSoumis" />
+          <NavigationProperty Name="Risque" Relationship="Self.suiviExamObl" FromRole="Examen" ToRole="Risque" />
+        </EntityType>
+        <EntityType Name="Profession">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="denomination" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Travailleur" Relationship="Self.REF_Trava_Profe_FK" FromRole="Profession" ToRole="Travailleur" />
+        </EntityType>
+        <EntityType Name="Risque">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="libelle" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ContratTravailSoumis" Relationship="Self.exposition2" FromRole="Risque" ToRole="ContratTravailSoumis" />
+          <NavigationProperty Name="Examen" Relationship="Self.suiviExamObl" FromRole="Risque" ToRole="Examen" />
+        </EntityType>
+        <EntityType Name="Travailleur">
+          <Key>
+            <PropertyRef Name="personne_id" />
+          </Key>
+          <Property Name="personne_id" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="nom" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="adresse" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="numeroDossier" Type="Decimal" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="code" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <NavigationProperty Name="ContratTravailSoumis" Relationship="Self.REF_Contr_Trava_FK" FromRole="Travailleur" ToRole="ContratTravailSoumis" />
+          <NavigationProperty Name="Profession" Relationship="Self.REF_Trava_Profe_FK" FromRole="Travailleur" ToRole="Profession" />
+        </EntityType>
+        <Association Name="REF_Contr_Entre_FK">
+          <End Role="Entreprise" Type="Self.Entreprise" Multiplicity="1" />
+          <End Role="ContratTravailSoumis" Type="Self.ContratTravailSoumis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entreprise">
+              <PropertyRef Name="numero" />
+            </Principal>
+            <Dependent Role="ContratTravailSoumis">
+              <PropertyRef Name="numero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REF_Contr_Trava_FK">
+          <End Role="Travailleur" Type="Self.Travailleur" Multiplicity="1" />
+          <End Role="ContratTravailSoumis" Type="Self.ContratTravailSoumis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Travailleur">
+              <PropertyRef Name="personne_id" />
+            </Principal>
+            <Dependent Role="ContratTravailSoumis">
+              <PropertyRef Name="personne_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REF_Trava_Profe_FK">
+          <End Role="Profession" Type="Self.Profession" Multiplicity="1" />
+          <End Role="Travailleur" Type="Self.Travailleur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profession">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="Travailleur">
+              <PropertyRef Name="code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ExamNonRelTravail">
+          <End Role="ContratTravailSoumis" Type="Self.ContratTravailSoumis" Multiplicity="*" />
+          <End Role="Examen" Type="Self.Examen" Multiplicity="*" />
+        </Association>
+        <Association Name="exposition2">
+          <End Role="ContratTravailSoumis" Type="Self.ContratTravailSoumis" Multiplicity="*" />
+          <End Role="Risque" Type="Self.Risque" Multiplicity="*" />
+        </Association>
+        <Association Name="suiviExamObl">
+          <End Role="Risque" Type="Self.Risque" Multiplicity="*" />
+          <End Role="Examen" Type="Self.Examen" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="MeditRisquesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ContratTravailSoumis" EntityType="Self.ContratTravailSoumis" />
+          <EntitySet Name="Entreprise" EntityType="Self.Entreprise" />
+          <EntitySet Name="Examen" EntityType="Self.Examen" />
+          <EntitySet Name="Profession" EntityType="Self.Profession" />
+          <EntitySet Name="Risque" EntityType="Self.Risque" />
+          <EntitySet Name="Travailleur" EntityType="Self.Travailleur" />
+          <AssociationSet Name="REF_Contr_Entre_FK" Association="Self.REF_Contr_Entre_FK">
+            <End Role="Entreprise" EntitySet="Entreprise" />
+            <End Role="ContratTravailSoumis" EntitySet="ContratTravailSoumis" />
+          </AssociationSet>
+          <AssociationSet Name="REF_Contr_Trava_FK" Association="Self.REF_Contr_Trava_FK">
+            <End Role="Travailleur" EntitySet="Travailleur" />
+            <End Role="ContratTravailSoumis" EntitySet="ContratTravailSoumis" />
+          </AssociationSet>
+          <AssociationSet Name="REF_Trava_Profe_FK" Association="Self.REF_Trava_Profe_FK">
+            <End Role="Profession" EntitySet="Profession" />
+            <End Role="Travailleur" EntitySet="Travailleur" />
+          </AssociationSet>
+          <AssociationSet Name="ExamNonRelTravail" Association="Self.ExamNonRelTravail">
+            <End Role="ContratTravailSoumis" EntitySet="ContratTravailSoumis" />
+            <End Role="Examen" EntitySet="Examen" />
+          </AssociationSet>
+          <AssociationSet Name="exposition2" Association="Self.exposition2">
+            <End Role="ContratTravailSoumis" EntitySet="ContratTravailSoumis" />
+            <End Role="Risque" EntitySet="Risque" />
+          </AssociationSet>
+          <AssociationSet Name="suiviExamObl" Association="Self.suiviExamObl">
+            <End Role="Risque" EntitySet="Risque" />
+            <End Role="Examen" EntitySet="Examen" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MeditModelStoreContainer" CdmEntityContainer="MeditRisquesEntities">
+          <EntitySetMapping Name="ContratTravailSoumis">
+            <EntityTypeMapping TypeName="MeditModel.ContratTravailSoumis">
+              <MappingFragment StoreEntitySet="ContratTravailSoumis">
+                <ScalarProperty Name="contrat_id" ColumnName="contrat_id" />
+                <ScalarProperty Name="dateDebut" ColumnName="dateDebut" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="personne_id" ColumnName="personne_id" />
+                <ScalarProperty Name="dateFin" ColumnName="dateFin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Entreprise">
+            <EntityTypeMapping TypeName="MeditModel.Entreprise">
+              <MappingFragment StoreEntitySet="Entreprise">
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="denomation" ColumnName="denomation" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="numeroTel" ColumnName="numeroTel" />
+                <ScalarProperty Name="nbTravailleurSoumis" ColumnName="nbTravailleurSoumis" />
+                <ScalarProperty Name="nbTravailleurNonSoumis" ColumnName="nbTravailleurNonSoumis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Examen">
+            <EntityTypeMapping TypeName="MeditModel.Examen">
+              <MappingFragment StoreEntitySet="Examen">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="libelle" ColumnName="libelle" />
+                <ScalarProperty Name="prix" ColumnName="prix" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profession">
+            <EntityTypeMapping TypeName="MeditModel.Profession">
+              <MappingFragment StoreEntitySet="Profession">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="denomination" ColumnName="denomination" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Risque">
+            <EntityTypeMapping TypeName="MeditModel.Risque">
+              <MappingFragment StoreEntitySet="Risque">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="libelle" ColumnName="libelle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Travailleur">
+            <EntityTypeMapping TypeName="MeditModel.Travailleur">
+              <MappingFragment StoreEntitySet="Travailleur">
+                <ScalarProperty Name="personne_id" ColumnName="personne_id" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="numeroDossier" ColumnName="numeroDossier" />
+                <ScalarProperty Name="code" ColumnName="code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ExamNonRelTravail" TypeName="MeditModel.ExamNonRelTravail" StoreEntitySet="ExamNonRelTravail">
+            <EndProperty Name="ContratTravailSoumis">
+              <ScalarProperty Name="contrat_id" ColumnName="contrat_id" />
+            </EndProperty>
+            <EndProperty Name="Examen">
+              <ScalarProperty Name="code" ColumnName="code" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="exposition2" TypeName="MeditModel.exposition2" StoreEntitySet="exposition2">
+            <EndProperty Name="ContratTravailSoumis">
+              <ScalarProperty Name="contrat_id" ColumnName="contrat_id" />
+            </EndProperty>
+            <EndProperty Name="Risque">
+              <ScalarProperty Name="code" ColumnName="code" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="suiviExamObl" TypeName="MeditModel.suiviExamObl" StoreEntitySet="suiviExamObl">
+            <EndProperty Name="Risque">
+              <ScalarProperty Name="code" ColumnName="code" />
+            </EndProperty>
+            <EndProperty Name="Examen">
+              <ScalarProperty Name="code" ColumnName="S_E_code" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

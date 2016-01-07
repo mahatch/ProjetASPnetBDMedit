@@ -1,0 +1,54 @@
+﻿@model  ProjetASPnet.Models.ExamenViewModels
+
+@{
+    ViewBag.Title = "Liste des Examens";
+}
+
+<h2>Liste des Examens pour les risques choisis</h2>
+
+<form action="/Examen/SelectedExamens" method="post">
+
+    @if (Model.ListExamensSelected != null && Model.ListExamensSelected.Count > 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListExamensSelected[0].libelle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListExamensSelected[0].prix)
+                </th>
+            </tr>
+
+            @for (int i = 0; i < Model.ListExamensSelected.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.CheckBoxFor(modelItem => Model.ListExamensSelected[i].isSelected)
+                        @Html.HiddenFor(modelItem => Model.ListExamensSelected[i].code)
+                        @Html.DisplayFor(modelItem => Model.ListExamensSelected[i].libelle)
+                        @Html.HiddenFor(modelItem => Model.ListExamensSelected[i].libelle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.ListExamensSelected[i].prix) €
+                        @Html.HiddenFor(modelItem => Model.ListExamensSelected[i].prix)
+                    </td>
+                </tr>
+            }
+        </table>
+        <button type="submit">Suivant</button>
+    }
+    else
+    {
+        if (Model.ListExamensSelected != null)
+        {
+            <br />
+            <h4>La limite d'examens pour cet employé a été atteinte</h4>
+        }
+        else
+        {
+            <br />
+            <h4>La liste des Examens n'a pas pu être récupéré</h4>
+        }
+    }
+</form>

@@ -1,0 +1,91 @@
+﻿@model  ProjetASPnet.Models.RecapitulatifViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    ViewBag.Title = "Récapitulatif";
+}
+
+
+
+<h2>Récapitulatif des risques et des examens particuliers</h2>
+@if (Model != null)
+{
+    <p>
+        Désignation de l'entreprise:
+
+        <b>@Html.DisplayName(Model.NomEntreprise)</b>
+    </p>
+    <p>
+        Nom du travailleur:
+        <b>@Html.DisplayName(Model.NomTravailleur)</b>
+    </p>
+    <h4>Liste des examens particuliers enregistrés à cet employer: </h4>
+    if (Model.Examens != null && Model.Examens.Count > 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    <p>Libelle</p>
+                </th>
+                <th>
+                    <p>Prix</p>
+                </th>
+            </tr>
+
+            @for (int i = 0; i < Model.Examens.Count; i++)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Examens.ElementAt(i).libelle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Examens.ElementAt(i).prix)
+                </td>
+            </tr>
+            }
+
+        </table>
+    }
+    else
+    {
+        <h4>La liste d'examens est vide</h4>
+    }
+    <h4>Liste des risques enregistrés à cet employer: </h4>
+    if (Model.Risque != null && Model.Risque.Count > 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    <p>Libelle</p>
+                </th>
+                <th>
+                    <p>Code</p>
+                </th>
+            </tr>
+
+            @for (int i = 0; i < Model.Risque.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Risque.ElementAt(i).libelle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Risque.ElementAt(i).code)
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <h4>La liste de risques est vide</h4>
+    }
+}
+else
+{
+    <h3>Vous n'êtes pas passé par toutes les étapes</h3>
+}

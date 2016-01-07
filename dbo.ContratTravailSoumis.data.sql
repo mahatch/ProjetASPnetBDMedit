@@ -1,0 +1,1 @@
+INSERT INTO [dbo].[ContratTravailSoumis] ([contrat_id], [dateDebut], [numero], [personne_id], [dateFin]) VALUES (CAST(1 AS Decimal(4, 0)), N'1985-05-02', CAST(1 AS Decimal(4, 0)), CAST(1 AS Decimal(4, 0)), N'2015-02-01')
