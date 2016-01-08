@@ -38,13 +38,15 @@
                 @Html.DisplayFor(modelItem => item.numeroTel)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.nbTravailleurSoumis)
+@*                @Html.DisplayFor(modelItem => item.nbTravailleurSoumis)*@
+                @Html.FormatValue(item.nbTravailleurSoumis, "{0:0}")
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.nbTravailleurNonSoumis)
+                @Html.FormatValue(item.nbTravailleurNonSoumis, "{0:0}")
+@*                @Html.DisplayFor(modelItem => item.nbTravailleurNonSoumis)*@
             </td>
             <td>
-                @Html.ActionLink("Choisir cette entreprise", "ChoixEntreprise", new { id=item.numero }) |
+                @Html.ActionLink("Choisir cette entreprise", "ChoixEntreprise", new { id=item.numero }) 
             </td>
         </tr>
 
